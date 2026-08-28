@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>داشبورد تحلیل بازار ایران</title>
+<link rel="stylesheet" href="/static/styles.css" />
+<script src="/vendor/plotly.min.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">◧</span>
+    <div>
+      <h1>داشبورد تحلیل بازار ایران</h1>
+      <p class="sub">تحلیل تکنیکال، الیوت، RTM، ICT و ACT روی بورس، بورس کالا، طلا، ارز و رمزارز</p>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="field">
+      <label>بازار</label>
+      <select id="market"></select>
+    </div>
+    <div class="field grow">
+      <label>نماد</label>
+      <input id="search" type="search" placeholder="جستجوی نماد…" autocomplete="off" />
+      <select id="symbol" size="1"></select>
+    </div>
+    <div class="field">
+      <label>تایم‌فریم</label>
+      <select id="timeframe"></select>
+    </div>
+    <div class="field">
+      <label>کندل‌ها</label>
+      <select id="limit">
+        <option value="200">۲۰۰</option>
+        <option value="400" selected>۴۰۰</option>
+        <option value="800">۸۰۰</option>
+      </select>
+    </div>
+    <button id="refresh" class="btn primary">تحلیل دوباره</button>
+    <a class="btn" href="/guide" title="راهنمای نصب و استفاده">راهنما</a>
+  </div>
+  <div class="source-badges" id="sourceBadges"></div>
+</header>
+
+<div id="banner" class="banner hidden"></div>
+
+<main>
+  <section class="price-strip" id="priceStrip"></section>
+
+  <section class="card chart-card">
+    <div class="card-head">
+      <h2>نمودار قیمت</h2>
+      <div class="chips" id="overlayChips"></div>
+    </div>
+    <div id="chart" dir="ltr"></div>
+    <div class="legend-note">
+      نواحی RTM با کادر رنگی، امواج الیوت با خط و برچسب، اوردربلاک/FVG با کادر خط‌چین و سیگنال‌ها با نشانگر مثلث نمایش داده می‌شوند.
+    </div>
+  </section>
+
+  <section class="recommendation" id="recommendation"></section>
+
+  <div class="grid two">
+    <section class="card">
+      <div class="card-head"><h2>سیگنال‌های معاملاتی</h2><span class="muted" id="signalCount"></span></div>
+      <div class="filters" id="engineFilters"></div>
+      <div id="signals" class="signal-list"></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>شمارش امواج الیوت</h2><span class="muted" id="elliottScore"></span></div>
+      <p class="summary" id="elliottSummary"></p>
+      <div id="elliottWaves" class="table-wrap"></div>
+      <h3>الگوهای شناسایی‌شده</h3>
+      <div id="elliottPatterns"></div>
+      <h3>اهداف و سطح بی‌اعتباری</h3>
+      <div id="elliottTargets"></div>
+    </section>
+  </div>
+
+  <div class="grid two">
+    <section class="card">
+      <div class="card-head"><h2>نواحی عرضه و تقاضا (RTM)</h2><span class="muted" id="rtmSummary"></span></div>
+      <div id="rtmZones" class="table-wrap"></div>
+    </section>
+    <section class="card">
+      <div class="card-head"><h2>ICT و ساختار بازار</h2><span class="muted" id="structureLabel"></span></div>
+      <div id="ictPanel"></div>
+      <h3>فاز ACT (انباشت ← فشردگی ← روند)</h3>
+      <div id="actPanel"></div>
+    </section>
+  </div>
+
+  <div class="grid two">
+    <section class="card">
+      <div class="card-head"><h2>ستاپ‌ها و نرخ پیروزی اندازه‌گیری‌شده</h2><span class="muted">روی همان داده‌های بارگذاری‌شده</span></div>
+      <div id="setupRanking" class="table-wrap"></div>
+      <div class="note warn" id="backtestNote"></div>
+    </section>
+    <section class="card">
+      <div class="card-head"><h2>اندیکاتورهای فعال</h2><span class="muted">آخرین مقادیر</span></div>
+      <div id="indicators" class="indicator-grid"></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="card-head"><h2>پشتیبان سیگنال‌ها: عوامل هم‌راستا</h2><span class="muted" id="confluenceScore"></span></div>
+    <div id="factors" class="table-wrap"></div>
+  </section>
+</main>
+
+<footer>
+  <p id="disclaimer"></p>
+  <p class="muted">منابع داده: TSETMC (AllSymbols, Index, Symbol, Nav, Option, Transaction, History, Candlestick, Shareholder, CODAL)، IME (Futures, Option, Certificate, Fund, Physical)، Market_CGCC (کامودیتی، طلا، ارز، رمزارز). وضعیت هر منبع در بالای صفحه نشان داده می‌شود.</p>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
