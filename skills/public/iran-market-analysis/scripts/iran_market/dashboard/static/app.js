@@ -44,6 +44,14 @@ async function api(path) {
 /* ------------------------------------------------------------------ bootstrap */
 
 async function init() {
+  // deep links: /?symbol=46348559193224090&tf=D1&limit=400&market=equity
+  const params = new URLSearchParams(location.search);
+  const wantedSymbol = params.get("symbol");
+  const wantedMarket = params.get("market");
+  if (wantedSymbol) state.symbol = wantedSymbol;
+  if (params.get("tf")) state.timeframe = params.get("tf");
+  if (params.get("limit")) state.limit = Number(params.get("limit"));
+
   const [health, markets, symbols] = await Promise.all([api("/api/health"), api("/api/markets"), api("/api/symbols")]);
   $("disclaimer").textContent = health.disclaimer;
   state.markets = markets;
@@ -57,6 +65,9 @@ async function init() {
   health.timeframes.forEach((tf) => tfSel.appendChild(new Option(tf, tf)));
   tfSel.value = state.timeframe;
 
+  const limitSel = $("limit");
+  if ([...limitSel.options].some((o) => Number(o.value) === state.limit)) limitSel.value = String(state.limit);
+
   buildChips();
   buildEngineFilters();
   renderSourceBadges(health.health_cache);
@@ -68,8 +79,13 @@ async function init() {
   $("limit").addEventListener("change", () => { state.limit = Number($("limit").value); load(); });
   $("refresh").addEventListener("click", load);
 
-  fillSymbols("all");
-  if (state.symbol) await load();
+  if (wantedMarket && markets.some((m) => m.id === wantedMarket)) {
+    marketSel.value = wantedMarket;
+    fillSymbols(wantedMarket);
+  } else {
+    fillSymbols("all");
+  }
+  if (state.symbol && !state.analysis) await load();
 }
 
 function fillSymbols(market, query) {

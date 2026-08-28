@@ -303,3 +303,27 @@ def test_dashboard_doctor_route_reports_the_universe_without_verifying_symbols(c
     assert body["universe"]["symbols"] > 30
     assert body["universe"]["verified"] == 0, "no code has been confirmed against the live API here"
     assert "verification" not in body["universe"]
+
+def test_dashboard_serves_the_persian_usage_guide(client):
+    response = client.get("/guide")
+    assert response.status_code == 200
+    page = response.text
+    assert 'lang="fa" dir="rtl"' in page
+    assert "راهنمای داشبورد تحلیل بازار ایران" in page
+    # every documented command must be present and copyable
+    for command in ("serve_dashboard.py", "analyze.py --list", "analyze.py --scan", "doctor.py", "pytest tests/skills/iran_market"):
+        assert command in page, command
+    assert page.count('class="copy"') >= 6
+    # deep links back into the dashboard, and no external CDN dependency
+    assert "symbol=46348559193224090" in page and "market=equity" in page
+    assert "cdn.jsdelivr" not in page and "unpkg.com" not in page
+
+
+def test_dashboard_links_to_the_guide(client):
+    assert 'href="/guide"' in client.get("/").text
+
+
+def test_dashboard_supports_deep_links(client):
+    js = client.get("/static/app.js").text
+    assert "URLSearchParams" in js, "the dashboard must honour ?symbol/?tf/?limit/?market"
+    assert 'params.get("symbol")' in js and 'params.get("market")' in js

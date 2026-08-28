@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>راهنمای داشبورد تحلیل بازار ایران</title>
+<link rel="stylesheet" href="/static/styles.css" />
+<style>
+  .wrap { display: flex; gap: 18px; padding: 18px 20px 40px; align-items: flex-start; }
+  .toc {
+    position: sticky; top: 78px; width: 210px; flex: 0 0 210px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 10px;
+  }
+  .toc a { display: block; color: var(--muted); text-decoration: none; padding: 6px 8px; border-radius: 8px; font-size: 12px; }
+  .toc a:hover { background: var(--panel-2); color: var(--text); }
+  .toc .toc-head { font-size: 11px; color: var(--muted); padding: 0 8px 8px; border-bottom: 1px solid var(--line); margin-bottom: 6px; }
+  .content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 10px; }
+  .step {
+    background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+    text-decoration: none; color: var(--text);
+  }
+  .step:hover { border-color: var(--accent); }
+  .step .n { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center;
+    background: var(--accent); color: #06121c; border-radius: 50%; font-size: 12px; font-weight: 700; margin-inline-end: 6px; }
+  .step .t { font-size: 13px; font-weight: 600; }
+  .step .d { color: var(--muted); font-size: 11px; margin-top: 4px; }
+  .codebox { position: relative; margin: 8px 0 0; }
+  pre.code {
+    background: #0a0e16; border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+    direction: ltr; text-align: left; font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 12px; line-height: 1.65; overflow-x: auto; margin: 0; color: #cfe3ff; white-space: pre;
+  }
+  pre.code .c { color: #6b7f9c; }
+  pre.code .out { color: #7dd3a0; }
+  .copy {
+    position: absolute; top: 6px; inset-inline-end: 6px; font-size: 11px; padding: 3px 8px;
+    background: var(--panel); border: 1px solid var(--line); color: var(--muted); border-radius: 6px; cursor: pointer;
+  }
+  .copy:hover { color: var(--text); border-color: var(--accent); }
+  table.guide { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.guide th, table.guide td { border-bottom: 1px solid var(--line); padding: 7px 8px; text-align: right; vertical-align: top; }
+  table.guide th { color: var(--muted); font-weight: 600; }
+  table.guide td code, table.guide th code, li code, p code {
+    background: #0a0e16; border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px;
+    font-family: "SFMono-Regular", Consolas, monospace; font-size: 11px; direction: ltr; display: inline-block;
+  }
+  ul.tight { margin: 6px 0 0; padding-inline-start: 18px; }
+  ul.tight li { margin: 4px 0; }
+  ol.read { margin: 6px 0 0; padding-inline-start: 20px; }
+  ol.read li { margin: 6px 0; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+  .pill.ok { color: var(--up); border-color: #14532d; }
+  .pill.no { color: var(--down); border-color: #7f1d1d; }
+  .quicklinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .quicklinks a { font-size: 12px; text-decoration: none; color: var(--accent); border: 1px solid var(--line); padding: 5px 10px; border-radius: 8px; }
+  .quicklinks a:hover { border-color: var(--accent); }
+  @media (max-width: 900px) { .toc { display: none; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">◧</span>
+    <div>
+      <h1>راهنمای داشبورد تحلیل بازار ایران</h1>
+      <p class="sub">نصب، اجرا، کار با CLI و روش خواندن خروجی — همه دستورها اجرا و بررسی شده‌اند</p>
+    </div>
+  </div>
+  <div class="controls">
+    <a class="btn primary" href="/">بازگشت به داشبورد</a>
+    <a class="btn" href="/api/docs" target="_blank" rel="noopener">مستندات API</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc">
+    <div class="toc-head">فهرست</div>
+    <a href="#quick">شروع سریع</a>
+    <a href="#install">۱) نصب</a>
+    <a href="#run">۲) اجرای داشبورد</a>
+    <a href="#ui">۳) اجزای صفحه</a>
+    <a href="#cli">۴) ابزار خط فرمان</a>
+    <a href="#read">۵) خواندن خروجی</a>
+    <a href="#metrics">۶) معیارها</a>
+    <a href="#live">۷) داده زنده</a>
+    <a href="#api">۸) API</a>
+    <a href="#test">۹) تست</a>
+    <a href="#limits">۱۰) حد و مرزها</a>
+  </nav>
+
+  <div class="content">
+
+    <section class="card" id="quick">
+      <div class="card-head"><h2>شروع سریع</h2><span class="muted">سه دستور، از صفر تا نمودار</span></div>
+      <div class="codebox">
+        <button class="copy">کپی</button>
+<pre class="code"><span class="c"># ۱. محیط مجازی و پکیج‌های داشبورد</span>
+cd deer-flow
+python3 -m venv .venv
+.venv/bin/pip install fastapi uvicorn plotly
+
+<span class="c"># ۲. اجرای داشبورد</span>
+cd skills/public/iran-market-analysis/scripts
+../../../.venv/bin/python serve_dashboard.py --host 0.0.0.0 --port 8010 --mode sample
+
+<span class="c"># ۳. بازکردن صفحه</span>
+<span class="out">http://localhost:8010</span></pre>
+      </div>
+      <div class="steps" style="margin-top:12px">
+        <a class="step" href="/?market=index&amp;tf=D1&amp;limit=400"><span class="n">۱</span><span class="t">شاخص کل</span><div class="d">TEDPIX با تایم‌فریم روزانه</div></a>
+        <a class="step" href="/?symbol=46348559193224090&amp;market=equity&amp;tf=D1&amp;limit=400"><span class="n">۲</span><span class="t">فولاد مبارکه</span><div class="d">نمونه تحلیل یک سهم</div></a>
+        <a class="step" href="/?market=gold&amp;tf=D1&amp;limit=400"><span class="n">۳</span><span class="t">طلا و سکه</span><div class="d">بازاری که فروش هم دارد</div></a>
+        <a class="step" href="/?symbol=BTC_USDT&amp;market=crypto&amp;tf=D1&amp;limit=400"><span class="n">۴</span><span class="t">رمزارز</span><div class="d">BTC/USDT روزانه</div></a>
+      </div>
+    </section>
+
+    <section class="card" id="install">
+      <div class="card-head"><h2>۱) نصب</h2><span class="muted">هسته تحلیل فقط کتابخانه استاندارد پایتون است</span></div>
+      <p>برای ابزار خط فرمان هیچ نصبی لازم نیست. داشبورد به سه پکیج نیاز دارد:</p>
+      <div class="codebox">
+        <button class="copy">کپی</button>
+<pre class="code">cd deer-flow
+python3 -m venv .venv
+.venv/bin/pip install fastapi uvicorn plotly                  <span class="c"># داشبورد</span>
+.venv/bin/pip install pytest httpx jdatetime ruff pyyaml      <span class="c"># اختیاری: تست، لینتر، اعتبارسنج</span></pre>
+      </div>
+      <p class="muted">نسخه‌های بررسی‌شده: <span class="pill ok">fastapi 0.141.1</span> <span class="pill ok">uvicorn 0.52.4</span> <span class="pill ok">plotly 7.0.0</span> <span class="pill">python 3.11</span></p>
+      <div class="note warn">اگر خطای <code>No such file or directory</code> برای مفسر پایتون دیدید، پوشه <code>.venv</code> پاک شده است (چون در <code>.gitignore</code> است و بین نشست‌ها نمی‌ماند)؛ مرحله نصب را تکرار کنید.</div>
+    </section>
+
+    <section class="card" id="run">
+      <div class="card-head"><h2>۲) اجرای داشبورد</h2></div>
+      <div class="codebox">
+        <button class="copy">کپی</button>
+<pre class="code">cd skills/public/iran-market-analysis/scripts
+python serve_dashboard.py --host 0.0.0.0 --port 8010 --mode sample</pre>
+      </div>
+      <div class="codebox">
+<pre class="code"><span class="out">داشبورد روی http://0.0.0.0:8010 (حالت داده: sample)
+INFO:     Uvicorn running on http://0.0.0.0:8010 (Press CTRL+C to quit)</span></pre>
+      </div>
+      <table class="guide">
+        <thead><tr><th>گزینه</th><th>پیش‌فرض</th><th>توضیح</th></tr></thead>
+        <tbody>
+          <tr><td><code>--host</code></td><td><code>0.0.0.0</code></td><td>روی همه اینترفیس‌ها؛ برای دسترسی از پروکسی یا کانتینر لازم است</td></tr>
+          <tr><td><code>--port</code></td><td><code>8010</code></td><td>پورت سرویس</td></tr>
+          <tr><td><code>--mode</code></td><td><code>auto</code></td><td><code>auto</code> تلاش برای داده زنده و در صورت شکست داده نمونه · <code>live</code> فقط زنده (در صورت شکست خطا) · <code>sample</code> فقط داده مصنوعی، بدون تماس با شبکه</td></tr>
+          <tr><td><code>--reload</code></td><td>خاموش</td><td>بارگذاری مجدد خودکار، فقط برای توسعه</td></tr>
+        </tbody>
+      </table>
+      <p class="muted">زمان اندازه‌گیری‌شده یک تحلیل کامل با بک‌تست روی این سرویس: <span class="pill ok">۰.۲۳ ثانیه</span> برای ۲۰۰ کندل نمودار از ۱۲۰۰ کندل تاریخچه.</p>
+    </section>
+
+    <section class="card" id="ui">
+      <div class="card-head"><h2>۳) اجزای صفحه</h2><span class="muted">همه اعداد از <code>/api/analysis</code> می‌آیند؛ چیزی در مرورگر محاسبه نمی‌شود</span></div>
+      <table class="guide">
+        <thead><tr><th>بخش</th><th>چه چیزی نشان می‌دهد</th></tr></thead>
+        <tbody>
+          <tr><td>نوار ابزار</td><td>بازار ← نماد (با جست‌وجو) ← تایم‌فریم ← تعداد کندل (۲۰۰/۴۰۰/۸۰۰) ← «تحلیل دوباره»</td></tr>
+          <tr><td>بنر منبع داده</td><td>اگر حالت <code>sample</code> باشد هشدار می‌دهد که قیمت‌ها مصنوعی‌اند</td></tr>
+          <tr><td>نمودار قیمت</td><td>کندل‌استیک + ۳ subplot (حجم، RSI، MACD). لایه‌های قابل انتخاب: <code>EMA20</code> <code>EMA50</code> <code>EMA200</code> <code>بولینگر</code> <code>سوپرتند</code> <code>SAR</code> <code>ایچیموکو</code> <code>الیوت</code> <code>نواحی RTM</code> <code>OB/FVG</code> <code>رنج ACT</code> <code>سیگنال‌ها</code></td></tr>
+          <tr><td>کارت پیشنهاد</td><td>اقدام، امتیاز هم‌راستایی، ورود/استاپ/هدف ۱/هدف ۲، R:R، دلایل، ریسک‌ها و «پشتیبان سیگنال‌ها»</td></tr>
+          <tr><td>سیگنال‌های معاملاتی</td><td>کارت هر سیگنال با موتور، ورود/استاپ/هدف و آمار اندازه‌گیری‌شده؛ فیلتر موتور: همه/RTM/ACT/ICT/الیوت/ستاپ‌ها</td></tr>
+          <tr><td>شمارش امواج الیوت</td><td>جدول موج‌ها، الگوهای شناسایی‌شده، اهداف و سطح بی‌اعتباری، اعتبار شمارش از ۱۰۰</td></tr>
+          <tr><td>نواحی عرضه و تقاضا (RTM)</td><td>نوع (RBR/DBR/DBD/RBD)، قدرت، وضعیت (فعال/شکسته‌شده)، MPL و ناحیه طلایی</td></tr>
+          <tr><td>ICT و ساختار بازار</td><td>اوردربلاک‌ها، FVG، جمع‌آوری نقدشوندگی، BOS/CHoCH، محدوده معاملاتی و OTE</td></tr>
+          <tr><td>فاز ACT</td><td>انباشت ← فشردگی ← روند، همراه رنج اندازه‌گیری‌شده</td></tr>
+          <tr><td>ستاپ‌ها و نرخ پیروزی</td><td>رتبه‌بندی ستاپ‌ها با تعداد معاملات، نرخ پیروزی، امید (R) و درجه A/B/C/D</td></tr>
+          <tr><td>بررسی اتصال منابع</td><td>تنها دکمه‌ای که شبکه را پروب می‌کند؛ خودِ صفحه هرگز پروب نمی‌کند تا بارگذاری کند نشود</td></tr>
+        </tbody>
+      </table>
+      <p class="muted">لینک عمیق پشتیبانی می‌شود: <code>/?symbol=CODE&amp;market=equity&amp;tf=D1&amp;limit=400</code></p>
+    </section>
+
+    <section class="card" id="cli">
+      <div class="card-head"><h2>۴) ابزار خط فرمان</h2><span class="muted">همان موتور، بدون مرورگر</span></div>
+      <div class="codebox">
+        <button class="copy">کپی</button>
+<pre class="code">python analyze.py --list                                   <span class="c"># فهرست نمادها (۳۸ نماد در ۷ بازار)</span>
+python analyze.py --symbol فولاد --timeframe D1 --bars 400  <span class="c"># گزارش خوانا</span>
+python analyze.py --code 46348559193224090 --json &gt; a.json  <span class="c"># خروجی کامل ماشین‌خوان</span>
+python analyze.py --scan equity --timeframe D1             <span class="c"># اسکن یک بازار، رتبه‌بندی‌شده</span>
+python analyze.py --file history.csv --symbol MYDATA       <span class="c"># تحلیل فایل خودتان</span>
+python analyze.py --symbol BTC_USDT --mode sample          <span class="c"># کاملاً آفلاین</span>
+python doctor.py                                           <span class="c"># بررسی اتصال منابع</span></pre>
+      </div>
+      <table class="guide">
+        <thead><tr><th>گزینه</th><th>توضیح</th></tr></thead>
+        <tbody>
+          <tr><td><code>--symbol</code> / <code>--code</code></td><td>نام فارسی نماد یا کد (insCode). این دو با هم و با <code>--scan</code>/<code>--list</code> ناسازگارند</td></tr>
+          <tr><td><code>--file</code></td><td>تاریخچه CSV/JSON محلی؛ همراه <code>--symbol</code> نام سری را مشخص می‌کند</td></tr>
+          <tr><td><code>--timeframe, -t</code></td><td><code>M5 M15 M30 H1 H4 D1 W1 MN1</code> (پیش‌فرض <code>D1</code>)</td></tr>
+          <tr><td><code>--bars</code></td><td>پنجره نمودار (پیش‌فرض ۴۰۰)</td></tr>
+          <tr><td><code>--backtest-bars</code></td><td>تاریخچه‌ای که نرخ پیروزی روی آن اندازه‌گیری می‌شود (پیش‌فرض ۱۲۰۰)</td></tr>
+          <tr><td><code>--no-backtest</code></td><td>بدون بک‌تست (سریع‌تر)</td></tr>
+          <tr><td><code>--mode</code></td><td><code>auto</code> / <code>live</code> / <code>sample</code></td></tr>
+          <tr><td><code>--allow-short</code></td><td>اجازه ستاپ فروش؛ فقط آتی/کالا/ارز/رمزارز. در سهام بورس پیش‌فرض خاموش است</td></tr>
+          <tr><td><code>--json</code></td><td>خروجی ماشین‌خوان</td></tr>
+        </tbody>
+      </table>
+      <p class="muted">کد خروج: <span class="pill ok">۰ موفق</span> <span class="pill">۲ آرگومان نامعتبر</span> <span class="pill no">۳ داده‌ای تولید نشد</span></p>
+    </section>
+
+    <section class="card" id="read">
+      <div class="card-head"><h2>۵) خواندن خروجی</h2><span class="muted">خروجی واقعی <code>--symbol فولاد --mode sample --bars 200 --backtest-bars 800</code></span></div>
+      <div class="codebox">
+<pre class="code">فولاد مبارکه اصفهان (46348559193224090) - equity
+منبع داده: sample | تایم‌فریم: D1 | کندل‌ها: 200 از 800
+هشدار: داده‌ها مصنوعی (sample) هستند و قیمت واقعی بازار نیستند.
+------------------------------------------------------------------------------
+قیمت: 1,519.00  تغییر: -0.78%  روند: خنثی / رنج  ADX: 14.4
+امواج الیوت: یک ساختار پنج‌موجی نزولی شناسایی شد: 1 (1,637) → 2 (1,897) → 3 (1,380)
+             → 4 (1,584) → 5 (1,399). اعتبار شمارش: 61/۱۰۰. سطح بی‌اعتباری: 1,897.
+RTM: 58 ناحیه، 14 فعال، 44 شکسته‌شده
+ACT: بدون فاز
+------------------------------------------------------------------------------
+پیشنهاد: بازار در وضعیت خنثی است - صبر برای ستاپ بهتر  (امتیاز -8.3, اطمینان 0.083)
+  ! تغییر ماهیت (CHoCH) در ساختار ثبت شده است؛ احتمال بازگشت روند وجود دارد.
+  ! فشردگی نوسان فعال است؛ شکست می‌تواند در هر دو جهت باشد.
+------------------------------------------------------------------------------
+ستاپ‌ها بر اساس نرخ پیروزی اندازه‌گیری‌شده روی همین داده‌ها:
+  شکست ابر ایچیموکو                  معاملات   5  پیروزی 100.0%  امید 2.4997  درجه نمونه کم
+  RTM - ناحیه تقاضای DBR             معاملات  25  پیروزی  56.0%  امید 0.5338  درجه C
+  پولبک به EMA20 در روند صعودی       معاملات   7  پیروزی  28.6%  امید -0.163  درجه نمونه کم
+کل: 86 معامله | پیروزی 41.9% | امید 0.2105R | ضریب سود 1.368 | افت 10.9846R</pre>
+      </div>
+      <ol class="read">
+        <li><b>منبع داده</b> — اگر <code>sample</code> است، هیچ عدد قیمتی را به بازار واقعی نسبت ندهید.</li>
+        <li><b>روند و ADX</b> — ADX زیر ۲۰ یعنی بازار رنج؛ اکثر ستاپ‌های روندی در این حالت بی‌اعتبارند (در نمونه بالا ۱۴.۴).</li>
+        <li><b>شمارش الیوت</b> — «اعتبار شمارش» از ۱۰۰ و «سطح بی‌اعتباری» سطحی است که عبور قیمت از آن، شمارش را باطل می‌کند.</li>
+        <li><b>RTM</b> — نسبت «فعال» به «شکسته‌شده» نشان می‌دهد چند ناحیه هنوز معتبر است (۱۴ از ۵۸).</li>
+        <li><b>ستاپ‌ها</b> — فقط سطرهای <b>۲۰ معامله یا بیشتر</b> قابل استنادند؛ بقیه <code>نمونه کم</code> می‌گیرند. در این نمونه فقط <code>RTM - ناحیه تقاضای DBR</code> درجه C دارد.</li>
+        <li><b>پیشنهاد</b> — امتیاز بین ۱۰۰− تا ۱۰۰+؛ آستانه خرید ۳۵+ و فروش ۳۵−. بدون سیگنال ورود معتبر، اقدام <code>wait</code> می‌ماند حتی اگر امتیاز بالا باشد.</li>
+        <li><b>ریسک‌ها</b> — شامل CHoCH، فشردگی نوسان، ورود دور از قیمت، و سیگنال‌های فروشی که به دلیل نبود فروش استقراضی در سهام حذف شده‌اند.</li>
+      </ol>
+    </section>
+
+    <section class="card" id="metrics">
+      <div class="card-head"><h2>۶) معیارها و فرض‌های بک‌تست</h2></div>
+      <table class="guide">
+        <thead><tr><th>معیار</th><th>تعریف</th></tr></thead>
+        <tbody>
+          <tr><td>نرخ پیروزی</td><td>سهم معاملات با R مثبت، روی همان داده‌ای که تحلیل شده است</td></tr>
+          <tr><td>امید (R)</td><td>میانگین سود بر حسب ریسک هر معامله؛ معیار اصلی مقایسه ستاپ‌ها</td></tr>
+          <tr><td>ضریب سود (PF)</td><td>مجموع سود ناخالص تقسیم بر مجموع زیان ناخالص</td></tr>
+          <tr><td>افت (R)</td><td>بیشترین افت انباشته منحنی سرمایه بر حسب R</td></tr>
+          <tr><td>درجه</td><td>A: پیروزی ≥۷۰٪ و امید ≥۰.۴ · B: ≥۶۰٪ و ≥۰.۲ · C: ≥۵۰٪ و ≥۰ · زیر ۲۰ معامله: <code>نمونه کم</code></td></tr>
+        </tbody>
+      </table>
+      <h3>فرض‌های بدبینانه</h3>
+      <ul class="tight">
+        <li>ثبت معامله در <b>باز شدن کندل بعد</b> از سیگنال، نه در خود کندل سیگنال</li>
+        <li>سفارش محدود فقط اگر قیمت در پنجره ورود واقعاً از آن عبور کند؛ وگرنه معامله <code>expired</code> و خارج از آمار</li>
+        <li>برخورد هم‌زمان استاپ و هدف در یک کندل = <b>استاپ</b></li>
+        <li>کارمزد ۶bps + اسلیپیج ۵bps در هر طرف</li>
+        <li>حذف استاپ‌های تنگ‌تر از ۰.۲۵٪ قیمت (یک تیک نویز نباید ۳۰۰− R بسازد)</li>
+        <li>بدون هم‌پوشانی پوزیشن‌ها داخل یک ستاپ</li>
+      </ul>
+    </section>
+
+    <section class="card" id="live">
+      <div class="card-head"><h2>۷) داده زنده و راستی‌آزمایی منابع</h2></div>
+      <div class="codebox">
+        <button class="copy">کپی</button>
+<pre class="code">python doctor.py                      <span class="c"># پروب ۲۴ اندپوینت از ۳ منبع</span>
+python doctor.py --json              <span class="c"># خروجی ماشین‌خوان</span>
+python doctor.py --discover --write  <span class="c"># پرکردن جدول نمادها از TSETMC_AllSymbols</span>
+python doctor.py --verify-symbols --write   <span class="c"># راستی‌آزمایی/اصلاح کدهای موجود</span></pre>
+      </div>
+      <p>خروجی واقعی در محیطی بدون دسترسی:</p>
+      <div class="codebox">
+<pre class="code">حالت پیکربندی‌شده: auto  |  حالت مؤثر: sample
+دسترسی زنده به حداقل یک منبع: خیر
+
+== بورس تهران (TSETMC)
+  [ERR] TSETMC_AllSymbols   https://old.tsetmc.com/tsev2/data/InstSimple/IsPlus/-1
+        URL error: TLS/SSL connection has been closed (EOF)
+== بازار کامودیتی / طلا / ارز (Market_CGCC)
+  [ERR] Market_CGCC_Gold    https://www.market.cgcc.ir/api/v1/gold
+        URL error: [Errno -2] Name or service not known</pre>
+      </div>
+      <div class="note warn">تا وقتی <code>doctor.py</code> روی شبکه شما <code>OK</code> نشان نداده، هیچ اندپوینتی تأییدشده نیست (همه با <code>verified: false</code> منتشر شده‌اند) و اعداد را باید <code>sample</code> فرض کنید. بدون <code>--write</code> هیچ فایلی تغییر نمی‌کند.</div>
+    </section>
+
+    <section class="card" id="api">
+      <div class="card-head"><h2>۸) API</h2><span class="muted">Swagger در <a href="/api/docs" target="_blank" rel="noopener">/api/docs</a></span></div>
+      <table class="guide">
+        <thead><tr><th>مسیر</th><th>خروجی</th></tr></thead>
+        <tbody>
+          <tr><td><code>GET /api/health</code></td><td>حالت، تعداد نمادها، تایم‌فریم‌ها، سلب مسئولیت — بدون پروب شبکه</td></tr>
+          <tr><td><code>GET /api/markets</code> · <code>GET /api/symbols?market=equity</code></td><td>بازارها و نمادها</td></tr>
+          <tr><td><code>GET /api/analysis?symbol=…&amp;tf=D1&amp;limit=400</code></td><td>کل تحلیل: نمودار، اندیکاتورها، الیوت، RTM، ICT، ACT، بک‌تست، سیگنال‌ها، پیشنهاد</td></tr>
+          <tr><td><code>GET /api/scan?market=gold</code></td><td>اسکن یک بازار، رتبه‌بندی‌شده بر اساس قدرت سیگنال</td></tr>
+          <tr><td><code>POST /api/upload</code></td><td>بدنه JSON با <code>symbol</code> و <code>text</code> (محتوای CSV) — نمونه پاسخ: <code>{"ok":true,"bars":90,"mode":"file"}</code></td></tr>
+          <tr><td><code>GET /api/sources?force=true</code></td><td>پروب منابع و جدول اندپوینت‌ها</td></tr>
+          <tr><td><code>GET /api/doctor</code></td><td>گزارش کامل سلامت، اندپوینت‌ها و خلاصه جدول نمادها</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" id="test">
+      <div class="card-head"><h2>۹) تست و اعتبارسنجی</h2></div>
+      <div class="codebox">
+        <button class="copy">کپی</button>
+<pre class="code">cd deer-flow
+.venv/bin/python -m pytest tests/skills/iran_market -q     <span class="out"># 124 passed</span>
+.venv/bin/python -m pytest tests/skills -q                 <span class="out"># 175 passed</span>
+.venv/bin/ruff check skills/public/iran-market-analysis \
+  --line-length 240 --target-version py311 --select E,F,I,UP
+.venv/bin/python skills/public/skill-creator/scripts/quick_validate.py \
+  skills/public/iran-market-analysis                       <span class="out"># Skill is valid!</span></pre>
+      </div>
+    </section>
+
+    <section class="card" id="limits">
+      <div class="card-head"><h2>۱۰) حد و مرزها</h2></div>
+      <ul class="tight">
+        <li>تضمین سود یا بازگشت سرمایه داده نمی‌شود؛ نرخ‌های پیروزی نتیجه گذشته <b>همان داده‌ها</b> هستند، نه پیش‌بینی آینده.</li>
+        <li>توصیه شخصی‌شده مبتنی بر شرایط مالی فردی ارائه نمی‌شود.</li>
+        <li>هیچ معامله‌ای خودکار انجام نمی‌شود؛ این مهارت هیچ مسیر اتصال به کارگزاری ندارد.</li>
+        <li>در سهام بورس تهران فقط سیگنال خرید صادر می‌شود؛ تمایل نزولی به‌صورت هشدار ریسک گزارش می‌شود.</li>
+        <li>بازار «صندوق‌های قابل معامله» عمداً خالی است؛ با <code>doctor.py --discover --write</code> از خود بورس پر می‌شود.</li>
+      </ul>
+      <div class="note">فایل متنی همین راهنما: <code>skills/public/iran-market-analysis/references/usage-fa.md</code> · جزئیات فنی محاسبات: <code>references/methodology.md</code></div>
+    </section>
+
+  </div>
+</div>
+
+<footer>
+  <p>تحلیل‌های این داشبورد صرفاً جنبه اطلاع‌رسانی دارند؛ تضمین سود یا بازگشت سرمایه داده نمی‌شود، توصیه شخصی‌شده مبتنی بر شرایط مالی فردی ارائه نمی‌گردد و هیچ معامله‌ای بدون تأیید کاربر اجرا نمی‌شود.</p>
+</footer>
+
+<script>
+"use strict";
+document.querySelectorAll(".copy").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    const code = btn.parentElement.querySelector("pre.code");
+    if (!code) return;
+    try {
+      await navigator.clipboard.writeText(code.innerText);
+      btn.textContent = "کپی شد";
+    } catch (_) {
+      btn.textContent = "کپی ناموفق";
+    }
+    setTimeout(() => { btn.textContent = "کپی"; }, 1600);
+  });
+});
+</script>
+</body>
+</html>

@@ -96,7 +96,9 @@ fires in one plain sentence. Always state the data source (`live`, `file` or
 python /mnt/skills/public/iran-market-analysis/scripts/serve_dashboard.py --host 0.0.0.0 --port 8010
 ```
 
-Bind `0.0.0.0` so container/sandbox previews can reach it. The page is a Persian
+Bind `0.0.0.0` so container/sandbox previews can reach it. The Persian usage
+guide is built in at `/guide` (also linked from the toolbar), and the dashboard
+accepts deep links such as `/?symbol=46348559193224090&market=equity&tf=D1&limit=400`. The page is a Persian
 RTL dashboard: symbol picker across all markets, Plotly candlestick chart with
 toggleable indicators and overlays (Elliott waves, RTM zones, ICT order blocks
 and FVGs, ACT range), signal cards, engine panels, the setup-ranking table and a

@@ -61,6 +61,14 @@ def create_app(mode: str = "auto", registry: DataSourceRegistry | None = None):
             raise HTTPException(status_code=500, detail="dashboard assets missing")
         return HTMLResponse(page.read_text(encoding="utf-8"))
 
+    @app.get("/guide", response_class=HTMLResponse)
+    def guide() -> Any:
+        """Persian usage guide, styled like the dashboard itself."""
+        page = STATIC_DIR / "guide.html"
+        if not page.exists():
+            raise HTTPException(status_code=404, detail="guide missing")
+        return HTMLResponse(page.read_text(encoding="utf-8"))
+
     @app.get("/static/{name}")
     def static(name: str) -> Any:
         path = (STATIC_DIR / name).resolve()
