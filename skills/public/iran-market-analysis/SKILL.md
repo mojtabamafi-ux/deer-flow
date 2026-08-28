@@ -143,6 +143,9 @@ the live API confirmed.
 
 ## Reference files
 
+- `references/usage-fa.md` - Persian installation/usage guide for the user:
+  exact commands (all verified), dashboard layout, how to read each number, and
+  the backtest assumptions. Point the user here when they ask how to run it.
 - `references/methodology.md` - exact indicator definitions, RTM/ICT/ACT/Elliott
   rules, backtest assumptions and the grading scale. Read it before explaining a
   number you did not compute yourself.
