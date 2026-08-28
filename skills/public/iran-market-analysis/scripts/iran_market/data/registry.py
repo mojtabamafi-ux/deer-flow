@@ -17,20 +17,20 @@ worse than not having data at all.
 from __future__ import annotations
 
 import json
-import os
 import time
 from pathlib import Path
 from typing import Any
 
 from ..core import Candle, FetchResult, Instrument, Quote, resample
 from ..data.sample import synthetic_candles
+from . import env_config
 from .file_source import FileSource
 from .ime import ImeSource
 from .market_cgcc import CgccSource
 from .tsetmc import TsetmcSource
 
 SKILL_ROOT = Path(__file__).resolve().parents[3]
-UNIVERSE_PATH = Path(os.environ.get("IRAN_MARKET_SYMBOLS", SKILL_ROOT / "references" / "symbols.json"))
+UNIVERSE_PATH = env_config.directory(env_config.SYMBOLS_FILE) or (SKILL_ROOT / "references" / "symbols.json")
 
 DEFAULT_MARKETS = (
     {"id": "index", "label": "شاخص‌ها", "source": "tsetmc", "allow_short": False},

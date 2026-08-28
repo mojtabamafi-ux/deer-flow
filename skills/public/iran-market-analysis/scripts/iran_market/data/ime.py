@@ -24,18 +24,17 @@ Requested surface: ``IME_Futures``, ``IME_Option``, ``IME_Certificate``,
 
 from __future__ import annotations
 
-import json
-import os
 from collections.abc import Iterable
 from datetime import datetime
 from typing import Any
 
 from ..core import Candle, FetchResult, Instrument
 from ..jalali import parse_deven
+from . import env_config
 from .base import MarketSource, SourceError, validate_candles
 from .http_client import build_url, http_get, http_json
 
-DEFAULT_BASE = os.environ.get("IME_API_BASE", "https://www.ime.co.ir")
+DEFAULT_BASE = env_config.text(env_config.IME_API_BASE) or "https://www.ime.co.ir"
 
 IME_API: dict[str, dict[str, Any]] = {
     "IME_Futures": {"path": "/api/futures/trades", "verified": False},
@@ -48,14 +47,7 @@ IME_API: dict[str, dict[str, Any]] = {
 
 
 def _load_overrides() -> dict[str, str]:
-    raw = os.environ.get("IME_ENDPOINTS_JSON")
-    if not raw:
-        return {}
-    try:
-        parsed = json.loads(raw)
-        return {str(k): str(v) for k, v in parsed.items()} if isinstance(parsed, dict) else {}
-    except json.JSONDecodeError:
-        return {}
+    return env_config.mapping(env_config.IME_ENDPOINTS_JSON)
 
 
 def _rows(payload: Any, *keys: str) -> list[dict]:

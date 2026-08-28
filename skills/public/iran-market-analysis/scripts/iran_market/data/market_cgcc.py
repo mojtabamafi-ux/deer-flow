@@ -13,18 +13,17 @@ Requested surface: ``Market_CGCC`` for کامودیتی، طلا، ارز و ا�
 
 from __future__ import annotations
 
-import json
-import os
 from collections.abc import Iterable
 from datetime import datetime
 from typing import Any
 
 from ..core import Candle, FetchResult, Instrument
 from ..jalali import parse_deven
+from . import env_config
 from .base import MarketSource, SourceError, validate_candles
 from .http_client import build_url, http_get, http_json
 
-DEFAULT_BASE = os.environ.get("CGCC_API_BASE", "https://www.market.cgcc.ir")
+DEFAULT_BASE = env_config.text(env_config.CGCC_API_BASE) or "https://www.market.cgcc.ir"
 
 CGCC_API: dict[str, dict[str, Any]] = {
     "Market_CGCC_Commodity": {"path": "/api/v1/commodities", "market": "commodity", "verified": False},
@@ -78,12 +77,7 @@ class CgccSource(MarketSource):
         self.base = base.rstrip("/")
         self.timeout = timeout
         self.retries = retries
-        raw = os.environ.get("CGCC_ENDPOINTS_JSON")
-        try:
-            parsed = json.loads(raw) if raw else {}
-            self.overrides = {str(k): str(v) for k, v in parsed.items()} if isinstance(parsed, dict) else {}
-        except json.JSONDecodeError:
-            self.overrides = {}
+        self.overrides = env_config.mapping(env_config.CGCC_ENDPOINTS_JSON)
 
     def _path(self, api: str) -> str:
         return self.overrides.get(api) or CGCC_API[api]["path"]

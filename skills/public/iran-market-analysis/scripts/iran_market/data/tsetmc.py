@@ -35,7 +35,6 @@ Requested API                        Endpoint used
 from __future__ import annotations
 
 import json
-import os
 import time
 from collections.abc import Iterable, Sequence
 from datetime import UTC, datetime
@@ -44,12 +43,13 @@ from typing import Any
 
 from ..core import Candle, FetchResult, Instrument, Quote
 from ..jalali import parse_deven
+from . import env_config
 from .base import MarketSource, SourceError, validate_candles
 from .http_client import build_url, http_json, http_text
 
-DEFAULT_API_BASE = os.environ.get("TSETMC_API_BASE", "https://cdn.tsetmc.com/api")
-DEFAULT_LEGACY_BASE = os.environ.get("TSETMC_LEGACY_BASE", "https://old.tsetmc.com/tsev2/data")
-DEFAULT_CODAL_BASE = os.environ.get("CODAL_API_BASE", "https://www.codal.ir/api/services/v2")
+DEFAULT_API_BASE = env_config.text(env_config.TSETMC_API_BASE) or "https://cdn.tsetmc.com/api"
+DEFAULT_LEGACY_BASE = env_config.text(env_config.TSETMC_LEGACY_BASE) or "https://old.tsetmc.com/tsev2/data"
+DEFAULT_CODAL_BASE = env_config.text(env_config.CODAL_API_BASE) or "https://www.codal.ir/api/services/v2"
 
 #: insCode of the total index (شاخص کل / TEDPIX) and the equal-weight index.
 INDEX_CODES = {
@@ -90,7 +90,7 @@ FLOW_LABELS = {
     10: "بورس کالا",
 }
 
-CACHE_DIR = Path(os.environ.get("IRAN_MARKET_CACHE", Path.home() / ".cache" / "iran-market-analysis"))
+CACHE_DIR = env_config.directory(env_config.CACHE_DIR) or (Path.home() / ".cache" / "iran-market-analysis")
 
 
 def _unwrap(payload: Any, *keys: str) -> Any:

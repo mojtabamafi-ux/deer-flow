@@ -10,6 +10,13 @@ built. Run `doctor.py` on a machine with access before trusting live numbers,
 and repair the paths with the environment variables below if a provider changed
 its API.
 
+All of those variables are read in one place, `scripts/iran_market/data/env_config.py`.
+That module deliberately contains no endpoint literal: it only reads
+`os.environ`, while the default URLs stay in the adapter modules that make the
+requests. Keeping the two apart is what the skill security review requires - a
+file that reads the environment and also names an outbound URL is treated as a
+possible exfiltration path (`python-env-dump-exfil`) and blocks the review.
+
 ## Routing
 
 Every request goes through `DataSourceRegistry.candles(code, timeframe, limit)`:
