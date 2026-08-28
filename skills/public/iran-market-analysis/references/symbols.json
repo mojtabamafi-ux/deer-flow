@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "generated": "2026-08-27",
+  "verified": false,
+  "note": "Codes below are the widely circulated identifiers for each instrument. They were NOT reachable from the sandbox this skill was built in, so every entry carries verified=false. Run `python scripts/doctor.py --verify-symbols` on a machine with access to the exchanges: it resolves each code through TSETMC_Symbol and rewrites this file with verified=true only for the codes whose returned symbol matches. Wrong codes fail loudly there instead of silently charting the wrong stock.",
+  "markets": [
+    { "id": "index", "label": "شاخص‌ها", "source": "tsetmc", "allow_short": false },
+    { "id": "equity", "label": "سهام بورس و فرابورس", "source": "tsetmc", "allow_short": false },
+    { "id": "fund", "label": "صندوق‌های قابل معامله", "source": "tsetmc", "allow_short": false },
+    { "id": "commodity", "label": "بورس کالا (IME)", "source": "ime", "allow_short": true },
+    { "id": "gold", "label": "طلا و سکه", "source": "market_cgcc", "allow_short": true },
+    { "id": "fx", "label": "ارز", "source": "market_cgcc", "allow_short": true },
+    { "id": "crypto", "label": "رمزارز", "source": "market_cgcc", "allow_short": true }
+  ],
+  "symbols": [
+    { "code": "32097828799138957", "symbol": "شاخص کل", "name": "شاخص کل بورس تهران (TEDPIX)", "market": "index", "source": "tsetmc", "verified": false },
+    { "code": "67130298613737946", "symbol": "هم‌وزن", "name": "شاخص کل هم‌وزن", "market": "index", "source": "tsetmc", "verified": false },
+    { "code": "33623456836198858", "symbol": "قیمت50", "name": "شاخص قیمت ۵۰ شرکت", "market": "index", "source": "tsetmc", "verified": false },
+    { "code": "56717416382860333", "symbol": "شناور", "name": "شاخص کل با معیار شناور آزاد", "market": "index", "source": "tsetmc", "verified": false },
+
+    { "code": "46348559193224090", "symbol": "فولاد", "name": "فولاد مبارکه اصفهان", "market": "equity", "source": "tsetmc", "sector": "فلزات اساسی", "verified": false },
+    { "code": "35425587644337450", "symbol": "فملی", "name": "ملی صنایع مس ایران", "market": "equity", "source": "tsetmc", "sector": "فلزات اساسی", "verified": false },
+    { "code": "18027801615184692", "symbol": "کچاد", "name": "چادرملو", "market": "equity", "source": "tsetmc", "sector": "فلزات اساسی", "verified": false },
+    { "code": "44818944894473463", "symbol": "کگل", "name": "گل گهر", "market": "equity", "source": "tsetmc", "sector": "فلزات اساسی", "verified": false },
+    { "code": "58931793851445922", "symbol": "خساپا", "name": "سایپا", "market": "equity", "source": "tsetmc", "sector": "خودرو", "verified": false },
+    { "code": "65883838195688438", "symbol": "خودرو", "name": "ایران خودرو", "market": "equity", "source": "tsetmc", "sector": "خودرو", "verified": false },
+    { "code": "7745894403636165", "symbol": "وبملت", "name": "بانک ملت", "market": "equity", "source": "tsetmc", "sector": "بانک", "verified": false },
+    { "code": "55006105649149808", "symbol": "وبصادر", "name": "بانک صادرات ایران", "market": "equity", "source": "tsetmc", "sector": "بانک", "verified": false },
+    { "code": "57711952338365788", "symbol": "وتجارت", "name": "بانک تجارت", "market": "equity", "source": "tsetmc", "sector": "بانک", "verified": false },
+    { "code": "32357363994084792", "symbol": "شبندر", "name": "پالایش نفت بندرعباس", "market": "equity", "source": "tsetmc", "sector": "فرآورده‌های نفتی", "verified": false },
+    { "code": "23903903030730621", "symbol": "شپنا", "name": "پالایش نفت اصفهان", "market": "equity", "source": "tsetmc", "sector": "فرآورده‌های نفتی", "verified": false },
+    { "code": "25244329144808978", "symbol": "اخابر", "name": "مخابرات ایران", "market": "equity", "source": "tsetmc", "sector": "مخابرات", "verified": false },
+    { "code": "43362633657009050", "symbol": "شستا", "name": "سرمایه‌گذاری تأمین اجتماعی", "market": "equity", "source": "tsetmc", "sector": "سرمایه‌گذاری", "verified": false },
+    { "code": "62235645698407350", "symbol": "وامید", "name": "گروه مدیریت سرمایه‌گذاری امید", "market": "equity", "source": "tsetmc", "sector": "سرمایه‌گذاری", "verified": false },
+    { "code": "44891482026867833", "symbol": "فارس", "name": "صنایع پتروشیمی خلیج فارس", "market": "equity", "source": "tsetmc", "sector": "پتروشیمی", "verified": false },
+    { "code": "62786141304633100", "symbol": "تاپیکو", "name": "سرمایه‌گذاری نفت و گاز پارس", "market": "equity", "source": "tsetmc", "sector": "سرمایه‌گذاری", "verified": false },
+    { "code": "29404443146989372", "symbol": "حکشتی", "name": "کشتیرانی جمهوری اسلامی", "market": "equity", "source": "tsetmc", "sector": "حمل و نقل", "verified": false },
+    { "code": "31144358730758650", "symbol": "دماوند", "name": "نیروگاه سیکل ترکیبی دماوند", "market": "equity", "source": "tsetmc", "sector": "برق", "verified": false },
+    { "code": "30974710512855688", "symbol": "کخاک", "name": "صنعتی و معدنی چادرملو", "market": "equity", "source": "tsetmc", "sector": "فلزات اساسی", "verified": false },
+
+    { "code": "GOLD18", "symbol": "طلا18", "name": "طلای ۱۸ عیار (هر مثقال)", "market": "gold", "source": "market_cgcc", "verified": false },
+    { "code": "SEKKEH_EMAMI", "symbol": "سکه امامی", "name": "سکه تمام بهار آزادی طرح جدید", "market": "gold", "source": "market_cgcc", "verified": false },
+    { "code": "SEKKEH_NIM", "symbol": "نیم سکه", "name": "نیم سکه بهار آزادی", "market": "gold", "source": "market_cgcc", "verified": false },
+    { "code": "XAU_USD", "symbol": "اونس طلا", "name": "اونس جهانی طلا (XAU/USD)", "market": "gold", "source": "market_cgcc", "verified": false },
+
+    { "code": "USD_IRR", "symbol": "دلار آزاد", "name": "دلار آمریکا به ریال (بازار آزاد)", "market": "fx", "source": "market_cgcc", "verified": false },
+    { "code": "EUR_IRR", "symbol": "یورو", "name": "یورو به ریال", "market": "fx", "source": "market_cgcc", "verified": false },
+    { "code": "AED_IRR", "symbol": "درهم", "name": "درهم امارات به ریال", "market": "fx", "source": "market_cgcc", "verified": false },
+
+    { "code": "BTC_USDT", "symbol": "بیت‌کوین", "name": "Bitcoin / Tether", "market": "crypto", "source": "market_cgcc", "verified": false },
+    { "code": "ETH_USDT", "symbol": "اتریوم", "name": "Ethereum / Tether", "market": "crypto", "source": "market_cgcc", "verified": false },
+    { "code": "USDT_IRR", "symbol": "تتر", "name": "Tether به ریال", "market": "crypto", "source": "market_cgcc", "verified": false },
+
+    { "code": "SAFFRON_IME", "symbol": "زعفران", "name": "گواهی سپرده زعفران نگین (IME)", "market": "commodity", "source": "ime", "verified": false },
+    { "code": "GOLD_COIN_IME", "symbol": "سکه بورسی", "name": "گواهی سپرده سکه طلا (IME)", "market": "commodity", "source": "ime", "verified": false },
+    { "code": "STEEL_BILLET_IME", "symbol": "شمش فولاد", "name": "شمش فولاد خوزستان (IME)", "market": "commodity", "source": "ime", "verified": false },
+    { "code": "PISTACHIO_IME", "symbol": "پسته", "name": "گواهی سپرده پسته (IME)", "market": "commodity", "source": "ime", "verified": false },
+    { "code": "UREA_IME", "symbol": "اوره", "name": "اوره پتروشیمی (IME)", "market": "commodity", "source": "ime", "verified": false }
+  ]
+}
